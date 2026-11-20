@@ -1,0 +1,29 @@
+body:has([data-edge-read-aloud-ui], #readAloudPdfStatus:not([hidden])) #outerContainer {
+  top: 40px;
+  height: calc(100% - 40px);
+}
+#readAloudPdfStatus {
+  position: fixed;
+  z-index: 10000;
+  inset: 0 0 auto;
+  min-height: 40px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 6px 25px;
+  color-scheme: light dark;
+  color: MenuText;
+  background: light-dark(#f4f4f4,#1f1f1f);
+  border-bottom: 1px solid color-mix(in srgb,currentColor 15%,transparent);
+}
+#readAloudPdfStatus[hidden] { display: none; }
+.readAloudPdfMarks {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+}
+.readAloudPdfMarks > div { position: absolute; background: #bed8ef; }
+.readAloudPdfMarks > .spokenWord { background: #ffff64; }
+@media print { #readAloudPdfStatus, .readAloudPdfMarks, [data-edge-read-aloud-ui] { display: none !important; } }

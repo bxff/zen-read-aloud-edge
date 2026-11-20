@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Speech API · Read Aloud</title><link rel="stylesheet" href="style.css">
+<main><h1>Speech API</h1>
+<form><label for="endpoint">Provider configuration</label>
+<textarea id="endpoint" required rows="6" autocomplete="off" spellcheck="false" aria-describedby="hint"></textarea>
+<p id="hint">Paste a speech service URL or a JSON provider definition, or <label class="file">import a JSON file<input id="file" type="file" accept=".json,application/json"></label>. A definition can add multiple voices to the picker.</p>
+<p id="destination" class="note" aria-live="polite"></p>
+<details id="advanced"><summary>Connection options</summary>
+<label>API key or bearer token (optional)<input type="password" id="key" autocomplete="off" spellcheck="false"></label>
+<p class="note">For HTTP providers. Stored only in this browser profile.</p>
+</details>
+<div><button type="submit">Save and use provider</button> <button id="remove" type="button" disabled>Remove provider</button></div>
+<p role="status" id="status"></p></form></main>
+<script src="../service/config.js"></script><script src="../service/connector.js"></script><script src="settings.js"></script></html>

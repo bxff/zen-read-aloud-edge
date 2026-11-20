@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "name": "Speech API",
+  "endpoint": "native://com.readaloud.edge",
+  "voice": "Microsoft Aria Online (Natural) - English (United States)",
+  "language": "en-US"
+}
