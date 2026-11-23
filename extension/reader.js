@@ -294,6 +294,13 @@ const readerController = (() => {
     }
     return null;
   }
+  const interactiveClick = 'a[href],area[href],button,input,select,textarea,option,summary,label,[contenteditable]:not([contenteditable="false"]),[tabindex]:not([tabindex="-1"]),[role="button"],[role="link"],[role="checkbox"],[role="radio"],[role="switch"],[role="tab"],[role="menuitem"],[role="menuitemcheckbox"],[role="menuitemradio"],[role="option"],[role="combobox"],[role="textbox"],[role="slider"],[role="spinbutton"],[role="treeitem"]';
+  function isInteractiveClick(event) {
+    return event.composedPath().some(node => node instanceof Element &&
+      node !== document.body && node !== document.documentElement &&
+      (node.matches(interactiveClick) || typeof node.onclick === "function" ||
+       getComputedStyle(node).cursor === "pointer"));
+  }
   document.addEventListener("pointerdown", event => {
     if (!event.isTrusted || event.target === bar?.host || event.target === hostedToolbar?.el) return;
     lastPoint = pointAt(event.clientX, event.clientY);
@@ -304,13 +311,12 @@ const readerController = (() => {
     menuPoint = pointAt(event.clientX, event.clientY);
   }, true);
   document.addEventListener("click", event => {
-    if (!bar || !event.isTrusted || event.target === bar.host || event.button || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || selectionRange()) return;
+    if (!bar || !event.isTrusted || event.composedPath().includes(bar.host) || event.button || event.metaKey || event.ctrlKey || event.altKey || event.shiftKey || selectionRange() || isInteractiveClick(event)) return;
     const point = pointAt(event.clientX, event.clientY);
     if (!point) return;
-    event.preventDefault(); event.stopPropagation();
     build(point, null);
     if (blocks.length) jump(blockIndex, position);
-  }, true);
+  });
   document.addEventListener("keydown", event => {
     if (bar && event.key === "Escape") {
       if (!bar.dismissOptions()) close();
